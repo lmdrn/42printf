@@ -6,11 +6,11 @@
 #    By: lmedrano <lmedrano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/01 10:28:32 by lmedrano          #+#    #+#              #
-#    Updated: 2022/11/01 16:06:34 by lmedrano         ###   ########.fr        #
+#    Updated: 2022/11/02 08:26:31 by lmedrano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= ft_printf.c
+SRCS		= ft_printf.c ft_print_args.c ft_print_fcts.c
 
 OBJS		= ${SRCS:.c=.o}
 
