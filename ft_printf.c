@@ -6,11 +6,41 @@
 /*   By: lmedrano <lmedrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:18:26 by lmedrano          #+#    #+#             */
-/*   Updated: 2022/11/02 19:56:28 by lmedrano         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:33:54 by lmedrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	ft_check_fmt(char format, va_list ap)
+{
+	int	len;
+	
+	len = 0;
+	if (format == 'c')
+		len = ft_printchar(va_arg(ap, int));
+	else if (format == 's')
+		len = ft_printstr(va_arg(ap, char*));
+	else if (format == 'd' || format == 'i')
+		len = ft_printnbr(va_arg(ap, int));
+	else if (format == 'x' || format == 'X')
+		len = ft_printhex(va_arg(ap, unsigned int), format, ft_hexlen(va_arg(ap, unsigned int)));
+	else if (format == 'p')
+		len = ft_printptr(va_arg(ap, unsigned long long));
+	else if (format == '%')
+	{
+		write(1, "%", 1);
+		len++;
+	}
+	return (len);
+}
+
+/*int	ft_isspace(char c){
+	if (c == ' ' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == '\t')
+		return (1);
+	return (0);
+}*/
 
 int	ft_printf(const char *format, ...)
 {
@@ -19,48 +49,44 @@ int	ft_printf(const char *format, ...)
 	va_list	args;
 
 	i = 0;
-	len = 0,
-	
-	va_start(ap);
+	len = 0;
+	va_start(args, format);
 	while (format[i] != '\0')
 	{
-		if (format[i] != '%') // means we wrote a sentence
+		if (format[i] == '%')
+		{
+			i++;
+			len += ft_check_fmt(format[i], args);
+		}
+		else
 		{
 			write(1, &format[i], 1);
 			len++;
 		}
-		else
-		{
-			i++;
-			//do fct to check format
-		}
 		i++;		
 	}
-	va_end(ap);
+	va_end(args);
 	return (len);
 }
-// TODO PRINT_F
-// 1. printf
-// if %, j'écris %
-// else va_arg
-//
-// va_arg va dans la fct which_args
-// 2. if c,s,u,i,d,x,X,p
-// redirect to correct fct
-//
-// 3. for each fct, check length, get arg, print arg.
-// PRINTCHAR
-// PRINTSTR
-// PRINTNBR
-// PRINTPTR
-// PRINTUNSIGNED
-// PRINTHEX
-//
-// Hex = 0123456789ABCDEF
-// 	 101112131415161718191A1B1C1D1E1F
-// 	 etc...
-// 	 !! x with lowercase and X with uppercase !!
-//
+
+#include "ft_print_fcts.c"
+int main(void)
+{
+	va_list	args = NULL;
+	void *a = "hello";
+	
+	printf("Test1: original printf\n");
+	printf("%p\n", a);
+	printf("Test2: printchar\n");
+	printf("%d\n", ft_printchar('a'));
+	printf("Test3: my printf\n");
+	ft_printf("%x", a);
+	printf("\n");
+	printf("Test4: check fmt fct\n");
+	printf("%d\n", ft_check_fmt('a', args));
+	printf("Test5: check hex count\n");
+	//printf("%x\n", ft_hexlen(a));
+}
 // Pointer = prefixed w/ x0 
 // 	     something to do with unsigned long long
 //
