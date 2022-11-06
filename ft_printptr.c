@@ -6,7 +6,7 @@
 /*   By: lmedrano <lmedrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 10:00:50 by lmedrano          #+#    #+#             */
-/*   Updated: 2022/11/06 10:07:39 by lmedrano         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:56:53 by lmedrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,14 @@ int	ft_printptr(unsigned long long ptr)
 {
 	int	p;
 
-	p = 0;
-	p += write(1, "0x10", 4);
+	p = 2;
+	write(1, "0x", 2);
 	if (ptr == 0)
+	{
+		p += 1;	
 		p += write(1, "0", 1);
+		return (p);
+	}
 	else
 	{
 		ft_putptr(ptr);

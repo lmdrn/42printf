@@ -6,7 +6,7 @@
 /*   By: lmedrano <lmedrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:18:26 by lmedrano          #+#    #+#             */
-/*   Updated: 2022/11/06 09:44:03 by lmedrano         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:51:59 by lmedrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	ft_check_fmt(char format, va_list ap)
 		len = ft_printhex(va_arg(ap, unsigned int), format, ft_hexlen(va_arg(ap, unsigned int)));
 	else if (format == 'p')
 		len = ft_printptr(va_arg(ap, unsigned long long));
-	else if (format == 'u')
-		len = ft_printuint(va_arg(ap, unsigned int));
 	else if (format == '%')
 	{
 		write(1, "%", 1);
 		len++;
 	}
+	else
+		ft_printchar(format);
 	return (len);
 }
 
@@ -50,8 +50,8 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			len += ft_check_fmt(format[i + 1], args);
 			i++;
+			len += ft_check_fmt(format[i], args);
 		}
 		else
 			len +=	write(1, &format[i], 1);
