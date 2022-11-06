@@ -6,7 +6,7 @@
 /*   By: lmedrano <lmedrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:18:26 by lmedrano          #+#    #+#             */
-/*   Updated: 2022/11/03 17:33:54 by lmedrano         ###   ########.fr       */
+/*   Updated: 2022/11/06 09:44:03 by lmedrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_check_fmt(char format, va_list ap)
 		len = ft_printhex(va_arg(ap, unsigned int), format, ft_hexlen(va_arg(ap, unsigned int)));
 	else if (format == 'p')
 		len = ft_printptr(va_arg(ap, unsigned long long));
+	else if (format == 'u')
+		len = ft_printuint(va_arg(ap, unsigned int));
 	else if (format == '%')
 	{
 		write(1, "%", 1);
@@ -34,13 +36,6 @@ int	ft_check_fmt(char format, va_list ap)
 	}
 	return (len);
 }
-
-/*int	ft_isspace(char c){
-	if (c == ' ' || c == '\n' || c == '\v'
-		|| c == '\f' || c == '\r' || c == '\t')
-		return (1);
-	return (0);
-}*/
 
 int	ft_printf(const char *format, ...)
 {
@@ -55,21 +50,18 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
+			len += ft_check_fmt(format[i + 1], args);
 			i++;
-			len += ft_check_fmt(format[i], args);
 		}
 		else
-		{
-			write(1, &format[i], 1);
-			len++;
-		}
+			len +=	write(1, &format[i], 1);
 		i++;		
 	}
 	va_end(args);
 	return (len);
 }
 
-#include "ft_print_fcts.c"
+/*#include "ft_print_fcts.c"
 int main(void)
 {
 	va_list	args = NULL;
@@ -86,7 +78,7 @@ int main(void)
 	printf("%d\n", ft_check_fmt('a', args));
 	printf("Test5: check hex count\n");
 	//printf("%x\n", ft_hexlen(a));
-}
+}*/
 // Pointer = prefixed w/ x0 
 // 	     something to do with unsigned long long
 //

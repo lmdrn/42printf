@@ -6,7 +6,7 @@
 /*   By: lmedrano <lmedrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:12:11 by lmedrano          #+#    #+#             */
-/*   Updated: 2022/11/03 17:26:54 by lmedrano         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:36:45 by lmedrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 int	ft_check_fmt(char format, va_list ap);
 int	ft_printf(const char *format, ...);
 int	ft_printchar(char c);
+int	ft_putstr(char *str);
 int	ft_printstr(char *str);
 int	ft_printnbr(int n);
 int	ft_isspace(char c);
@@ -29,5 +30,8 @@ int	ft_hexlen(unsigned int hex);
 int	ft_printhex(unsigned int hex, char format, int len);
 int	ft_ptrlen(uintptr_t ptr);
 int	ft_printptr(unsigned long long ptr);
+int	ft_uintlen(unsigned int n);
+char	*ft_uint_itoa(unsigned int n);
+int	ft_printuint(unsigned int n);
 
 #endif
